@@ -1,9 +1,9 @@
-# [PROGRAM NAME] 
+# Stickman Z 
 [a description of the program]
 
 ## Getting Started
 ---
-[how to install and run the program]
+python3 -m pip install arcade
 
 ## Project Structure
 ---
