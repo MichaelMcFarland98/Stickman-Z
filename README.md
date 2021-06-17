@@ -1,5 +1,5 @@
 # Stickman Z 
-[a description of the program]
+[WIP] In this program, the user will try to survive a zombie attack! Zombies will come for you in every direction so it's up to you to survive until the time limit is up! Good Luck!
 
 ## Getting Started
 ---
