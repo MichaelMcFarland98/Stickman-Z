@@ -27,3 +27,4 @@ root                    (project root folder)
 ## Authors
 ---
 Michael McFarland - michaelmcfarland1998@gmail.com
+Ashur Ellsworth   - ell15022@byui.edu
