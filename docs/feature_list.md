@@ -16,16 +16,26 @@ Hard Button
 
 ## Game Scene
 
-    User-controlled paddle
-    Angled ball movement
-    Multicolored bricks
-    Collision detection
-    Life display
-    Score display
-    Sound effects
+User-controlled character
+
+Gun with bullets
+
+Zombies
+
+Life display
+
+Time display
+
+Mini-map display
+
+Collision detection
+
+Sound effects
 
 ## Lose Scene
 
-    Announcement
-    Sad face animation
-    Restart button
+Announcement
+
+Try again button
+
+Quit button
