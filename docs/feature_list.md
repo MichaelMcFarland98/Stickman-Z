@@ -2,40 +2,40 @@
 
 ## Main Scene
 
-Play button
+Play button()
 
-Exit button
+Exit button()
 
 ## Difficulty Scene
 
-Easy Button
+Easy Button()
 
-Normal Button
+Normal Button()
 
-Hard Button
+Hard Button()
 
 ## Game Scene
 
-User-controlled character
+User-controlled character()
 
-Gun with bullets
+Gun with bullets()
 
-Zombies
+Zombies()
 
-Life display
+Life display()
 
-Time display
+Time display()
 
-Mini-map display
+Mini-map display()
 
-Collision detection
+Collision detection()
 
-Sound effects
+Sound effects()
 
 ## Lose Scene
 
-Announcement
+Announcement()
 
-Try again button
+Try again button()
 
-Quit button
+Quit button()
