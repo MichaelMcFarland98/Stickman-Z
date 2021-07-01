@@ -1,49 +1,45 @@
-import sys
-from game.point import Point
-
 import arcade
+import math
+import random
 
-class InputService:
-    """Detects player input. The responsibility of the class of objects is to detect and communicate player keypresses.
-
-    Stereotype: 
-        Service Provider
-
-    Attributes:
-        _keys (list): up, dn, lt, rt.
-    """
-
+class Input_service:
+    
     def __init__(self):
-        """The class constructor."""
-        self._keys = []
+        pass
 
-    def set_key(self, key, modifiers):
-        #Ignoring modifies ar this point...
-        self._keys.append(key)
+    def on_release(self, key, modifiers, player_sprites):
+        player_sprite = player_sprites["player"][0][0]
+        if key == arcade.key.UP or key == arcade.key.W:
+            player_sprite.change_y = 0
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            player_sprite.change_y = 0
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            player_sprite.change_x = 0
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            player_sprite.change_x = 0
+        return player_sprite
 
-    def remove_key(self, key, modifiers):
-        self._keys.remove(key)
+    def on_press(self, key, modifiers, player_sprites, movement_speed):
+        player_sprite = player_sprites["player"][0][0]
+        if key == arcade.key.UP or key == arcade.key.W:
+            player_sprite.change_y = movement_speed
+        elif key == arcade.key.DOWN or key == arcade.key.S:
+            player_sprite.change_y = -movement_speed
+        elif key == arcade.key.LEFT or key == arcade.key.A:
+            player_sprite.change_x = -movement_speed
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
+            player_sprite.change_x = movement_speed
+        return player_sprite
 
-    def get_direction(self):
-        """Gets the selected direction for the given player.
 
-        Returns:
-            Point: The selected direction.
-        """
-        x = 0
-        y = 0
+    def on_click(self, x, y, button, modifiers, player_sprites, SPRITE_SCALING_LASER):
+        """ Called whenever the mouse button is clicked. """
+        
 
-        if arcade.key.A in self._keys:
-            x = -1
-        elif arcade.key.D in self._keys:
-            x = 1
-
-        if arcade.key.W in self._keys:
-            y = 1
-        elif arcade.key.S in self._keys:
-            y = -1
-
-        velocity = Point(x, y)
-        return velocity
-
+        player_sprite = player_sprites["player"][0][0]
+        start_x = player_sprite.center_x
+        start_y = player_sprite.center_y
+        
+        
+        return player_sprites
         
