@@ -1,49 +1,39 @@
-import sys
-from game import constants
-
 import arcade
+from game.player import Player
 
-class OutputService:
-    """Outputs the game state. The responsibility of the class of objects is to draw the game state on the terminal. 
+class Output_service:
 
-    Stereotype: 
-        Service Provider
+    def __init__(self):
+        self.HEALTHBAR_HEIGHT = 10
+        self.HEALTHBAR_WIDTH = 70
+        # self.player_max_hp = player.get_health()
 
-    Attributes:
-        _screen (Screen): An Asciimatics screen.
-    """
+    def execute(self, actors):
+        players = actors['player'][0]
+        zombies = actors['zombie'][0] 
+        walls = actors['wall'][0]
+        obsticals = actors['obsticals'][0]
+        
 
-    def init(self):
-        """The class constructor.
+        
+        for player in players:
+            player.draw()
+        for zombie in zombies:
+            zombie.draw()
+        for wall in walls:
+            wall.draw() 
+        for obstical in obsticals:
+            obstical.draw()
+    
+        
+        arcade.draw_text(f"Score: {player.get_score()}", 10, 630, arcade.color.WHITE, 14)
 
-        Args:
-        """
-        pass
+        # This code displays the health bar in the bottom left.
+        self.player_max_hp = player.get_max_health()
 
-    def clear_screen(self):
-        arcade.start_render()
+        health_width = self.HEALTHBAR_WIDTH * (player.get_health() / self.player_max_hp)
 
-    def draw_actor(self, actor):
-        """Renders the given actor's text on the screen.
+        if player.get_health() < self.player_max_hp:
+            arcade.draw_rectangle_filled(50, 20, width=self.HEALTHBAR_WIDTH, height=self.HEALTHBAR_HEIGHT, color=arcade.color.RED)
 
-        Args:
-            actor (Actor): The actor to render.
-        """
-        # It would be nice to get the image information from the Actor here and
-        # then pass it along to the arcade service methods, but that doesn't jive
-        # with the Sprite model very well.
-
-        actor.draw()
-
-    def draw_actors(self, actors):
-        """Renders the given list of actors on the screen.
-
-        Args:
-            actors (list): The actors to render.
-        """ 
-        for actor in actors:
-            self.draw_actor(actor)
-
-    def flush_buffer(self):
-        """Renders the screen.""" 
-        pass
+        arcade.draw_rectangle_filled(50, 20, width=health_width, height=self.HEALTHBAR_HEIGHT, color=arcade.color.GREEN)
