@@ -1,7 +1,7 @@
 import arcade
 import math
 import random
-from game.constants import *
+from game import constants
 
 
 class Player(arcade.Sprite):
@@ -15,44 +15,13 @@ class Player(arcade.Sprite):
         # Check for out-of-bounds
         if self.left < 0:
             self.left = 0
-        elif self.right > SCREEN_WIDTH - 1:
-            self.right = SCREEN_WIDTH - 1
+        elif self.right > constants.SCREEN_WIDTH - 1:
+            self.right = constants.SCREEN_WIDTH - 1
 
         if self.bottom < 0:
             self.bottom = 0
-        elif self.top > SCREEN_HEIGHT - 1:
-            self.top = SCREEN_HEIGHT - 1
-
-
-class Zombie(arcade.Sprite):
-    """
-    This class represents the Zombies on our screen. It is a child class of
-    the arcade library's "Sprite" class.
-    """
-
-    def follow_sprite(self, player_sprite):
-        """
-        This function will move the current sprite towards whatever
-        other sprite is specified as a parameter.
-
-        We use the 'min' function here to get the sprite to line up with
-        the target sprite, and not jump around if the sprite is not off
-        an exact multiple of ZOMBIE_SPEED.
-        """
-
-        if self.center_y < player_sprite.center_y:
-            self.center_y += min(ZOMBIE_SPEED,
-                                 player_sprite.center_y - self.center_y)
-        elif self.center_y > player_sprite.center_y:
-            self.center_y -= min(ZOMBIE_SPEED,
-                                 self.center_y - player_sprite.center_y)
-
-        if self.center_x < player_sprite.center_x:
-            self.center_x += min(ZOMBIE_SPEED,
-                                 player_sprite.center_x - self.center_x)
-        elif self.center_x > player_sprite.center_x:
-            self.center_x -= min(ZOMBIE_SPEED,
-                                 self.center_x - player_sprite.center_x)
+        elif self.top > constants.SCREEN_HEIGHT - 1:
+            self.top = constants.SCREEN_HEIGHT - 1
 
 
 class MyGame(arcade.Window):
@@ -97,21 +66,21 @@ class MyGame(arcade.Window):
 
         # Set up the player
         self.player_sprite = Player(
-            PLAYER_SPRITE, PLAYER_SCALING)
-        self.player_sprite.center_x = SCREEN_WIDTH / 2
-        self.player_sprite.center_y = SCREEN_HEIGHT / 2
+            constants.PLAYER_SPRITE, constants.PLAYER_SCALING)
+        self.player_sprite.center_x = constants.SCREEN_WIDTH / 2
+        self.player_sprite.center_y = constants.SCREEN_HEIGHT / 2
         self.player_list.append(self.player_sprite)
 
         # Create the zombies
-        for i in range(ZOMBIE_COUNT):
+        for i in range(constants.ZOMBIE_COUNT):
 
             # Create the zombies instance
-            zombie = Zombie(
-                ZOMBIE_SPRITE, ZOMBIE_SCALING)
+            zombie = arcade.Sprite(
+                constants.ZOMBIE_SPRITE, constants.ZOMBIE_SCALING)
 
             # Position the zombie
-            zombie.center_x = random.randrange(SCREEN_WIDTH)
-            zombie.center_y = random.randrange(120, SCREEN_HEIGHT)
+            zombie.center_x = random.randrange(constants.SCREEN_WIDTH)
+            zombie.center_y = random.randrange(120, constants.SCREEN_HEIGHT)
 
             # Add the zombie to the lists
             self.zombie_list.append(zombie)
@@ -140,16 +109,13 @@ class MyGame(arcade.Window):
         self.player_sprite.change_y = 0
 
         if self.up_pressed and not self.down_pressed:
-            self.player_sprite.change_y = PLAYER_SPEED
+            self.player_sprite.change_y = constants.PLAYER_SPEED
         elif self.down_pressed and not self.up_pressed:
-            self.player_sprite.change_y = -PLAYER_SPEED
+            self.player_sprite.change_y = -constants.PLAYER_SPEED
         if self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -PLAYER_SPEED
+            self.player_sprite.change_x = -constants.PLAYER_SPEED
         elif self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_SPEED
-
-        for zombie in self.zombie_list:
-            zombie.follow_sprite(self.player_sprite)
+            self.player_sprite.change_x = constants.PLAYER_SPEED
 
         # Loop through each bullet
         for bullet in self.bullet_list:
@@ -204,7 +170,7 @@ class MyGame(arcade.Window):
 
         # Create a bullet
         bullet = arcade.Sprite(
-            ":resources:images/space_shooter/laserBlue01.png", BULLET_SCALING)
+            ":resources:images/space_shooter/laserBlue01.png", constants.BULLET_SCALING)
 
         # Position the bullet at the player's current location
         start_x = self.player_sprite.center_x
@@ -229,8 +195,8 @@ class MyGame(arcade.Window):
 
         # Taking into account the angle, calculate our change_x
         # and change_y. Velocity is how fast the bullet travels.
-        bullet.change_x = math.cos(angle) * BULLET_SPEED
-        bullet.change_y = math.sin(angle) * BULLET_SPEED
+        bullet.change_x = math.cos(angle) * constants.BULLET_SPEED
+        bullet.change_y = math.sin(angle) * constants.BULLET_SPEED
 
         # Add the bullet to the appropriate lists
         self.bullet_list.append(bullet)
@@ -253,8 +219,8 @@ class MyGame(arcade.Window):
 
 def main():
     """ Main method """
-    window = MyGame(SCREEN_WIDTH,
-                    SCREEN_HEIGHT, SCREEN_TITLE)
+    window = MyGame(constants.SCREEN_WIDTH,
+                    constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
     window.setup()
     arcade.run()
 
