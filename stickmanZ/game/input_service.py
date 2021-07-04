@@ -2,8 +2,9 @@ import arcade
 import math
 import random
 
+
 class Input_service:
-    
+
     def __init__(self):
         pass
 
@@ -31,15 +32,11 @@ class Input_service:
             player_sprite.change_x = movement_speed
         return player_sprite
 
-
     def on_click(self, x, y, button, modifiers, player_sprites, SPRITE_SCALING_LASER):
         """ Called whenever the mouse button is clicked. """
-        
 
         player_sprite = player_sprites["player"][0][0]
         start_x = player_sprite.center_x
         start_y = player_sprite.center_y
-        
-        
+
         return player_sprites
-        
