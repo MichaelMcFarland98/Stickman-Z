@@ -44,30 +44,19 @@ class Zombie(arcade.Sprite):
         an exact multiple of ZOMBIE_SPEED.
         """
 
-        self.center_x += self.change_x
-        self.center_y += self.change_y
+        if self.center_y < player_sprite.center_y:
+            self.center_y += min(ZOMBIE_SPEED,
+                                 player_sprite.center_y - self.center_y)
+        elif self.center_y > player_sprite.center_y:
+            self.center_y -= min(ZOMBIE_SPEED,
+                                 self.center_y - player_sprite.center_y)
 
-        # Random 1 in 100 chance that we'll change from our old direction and
-        # then re-aim toward the player
-        if random.randrange(100) == 0:
-            start_x = self.center_x
-            start_y = self.center_y
-
-            # Get the destination location for the bullet
-            dest_x = player_sprite.center_x
-            dest_y = player_sprite.center_y
-
-            # Do math to calculate how to get the bullet to the destination.
-            # Calculation the angle in radians between the start points
-            # and end points. This is the angle the bullet will travel.
-            x_diff = dest_x - start_x
-            y_diff = dest_y - start_y
-            angle = math.atan2(y_diff, x_diff)
-
-            # Taking into account the angle, calculate our change_x
-            # and change_y. Velocity is how fast the bullet travels.
-            self.change_x = math.cos(angle) * ZOMBIE_SPEED
-            self.change_y = math.sin(angle) * ZOMBIE_SPEED
+        if self.center_x < player_sprite.center_x:
+            self.center_x += min(ZOMBIE_SPEED,
+                                 player_sprite.center_x - self.center_x)
+        elif self.center_x > player_sprite.center_x:
+            self.center_x -= min(ZOMBIE_SPEED,
+                                 self.center_x - player_sprite.center_x)
 
     def setup_other_zombies(self, zombie, zombie_list):
         """"""
@@ -108,9 +97,8 @@ class MyGame(arcade.Window):
         self.up_pressed = False
         self.down_pressed = False
 
-        # Used in scrolling
-        self.view_bottom = 0
-        self.view_left = 0
+        # Set the background color
+        arcade.set_background_color(arcade.color.AMAZON)
 
     def setup(self):
         """ Set up the game and initialize the variables. """
@@ -162,10 +150,9 @@ class MyGame(arcade.Window):
         self.physics_engine_zombie = []
 
         for zombie in self.zombie_list:
+            zombie_collision_list = zombie.other_zombies
             self.physics_engine_zombie.append(
-                arcade.PhysicsEngineSimple(zombie, zombie.other_zombies))
-            self.physics_engine_zombie.append(
-                arcade.PhysicsEngineSimple(zombie, self.wall_list))
+                arcade.PhysicsEngineSimple(zombie, zombie_collision_list))
 
     def on_draw(self):
         """
@@ -232,50 +219,6 @@ class MyGame(arcade.Window):
 
         for zombie_physics in self.physics_engine_zombie:
             zombie_physics.update()
-
-        # --- Manage Scrolling ---
-
-        # Keep track of if we changed the boundary. We don't want to call the
-        # set_viewport command if we didn't change the view port.
-        changed = False
-
-        # Scroll left
-        left_boundary = self.view_left + VIEWPORT_MARGIN
-        if self.player_sprite.left < left_boundary:
-            self.view_left -= left_boundary - self.player_sprite.left
-            changed = True
-
-        # Scroll right
-        right_boundary = self.view_left + SCREEN_WIDTH - VIEWPORT_MARGIN
-        if self.player_sprite.right > right_boundary:
-            self.view_left += self.player_sprite.right - right_boundary
-            changed = True
-
-        # Scroll up
-        top_boundary = self.view_bottom + SCREEN_HEIGHT - VIEWPORT_MARGIN
-        if self.player_sprite.top > top_boundary:
-            self.view_bottom += self.player_sprite.top - top_boundary
-            changed = True
-
-        # Scroll down
-        bottom_boundary = self.view_bottom + VIEWPORT_MARGIN
-        if self.player_sprite.bottom < bottom_boundary:
-            self.view_bottom -= bottom_boundary - self.player_sprite.bottom
-            changed = True
-
-        # Make sure our boundaries are integer values. While the view port does
-        # support floating point numbers, for this application we want every pixel
-        # in the view port to map directly onto a pixel on the screen. We don't want
-        # any rounding errors.
-        self.view_left = int(self.view_left)
-        self.view_bottom = int(self.view_bottom)
-
-        # If we changed the boundary values, update the view port to match
-        if changed:
-            arcade.set_viewport(self.view_left,
-                                SCREEN_WIDTH + self.view_left,
-                                self.view_bottom,
-                                SCREEN_HEIGHT + self.view_bottom)
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

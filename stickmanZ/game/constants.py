@@ -1,6 +1,7 @@
 # SCREEN
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
+VIEWPORT_MARGIN = 0
 SCREEN_TITLE = "Stickman Z"
 # PLAYER
 PLAYER_SPRITE = "stickmanZ/assets/images/player.png"
@@ -14,7 +15,7 @@ BULLET_SPEED = 5
 ZOMBIE_SPRITE = "stickmanZ/assets/images/zombie.png"
 ZOMBIE_SCALING = 1
 ZOMBIE_SPEED = 0.5
-ZOMBIE_COUNT = 10
+ZOMBIE_COUNT = 1
 # MAP
 MAP_PATH = "stickmanZ/assets/tiled_maps/stickmanZ_map.tmx"
 TILE_SCALING = 1
