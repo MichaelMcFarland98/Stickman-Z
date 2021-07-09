@@ -1,11 +1,10 @@
 # SCREEN
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-VIEWPORT_MARGIN_WIDTH = 400
-VIEWPORT_MARGIN_HEIGHT = 300
+VIEWPORT_MARGIN = 0
 # Size of the playing field
-PLAYING_FIELD_WIDTH = 3200
-PLAYING_FIELD_HEIGHT = 1600
+PLAYING_FIELD_WIDTH = 1600
+PLAYING_FIELD_HEIGHT = 832
 SCREEN_TITLE = "Stickman Z"
 # PLAYER
 PLAYER_SPRITE = "stickmanZ/assets/images/player.png"
@@ -21,7 +20,7 @@ ZOMBIE_SCALING = 1
 ZOMBIE_SPEED = 0.5
 ZOMBIE_COUNT = 1
 # MAP
-MAP_PATH = "stickmanZ/assets/tiled_maps/stickmanZ.tmx"
+MAP_PATH = "stickmanZ/assets/tiled_maps/stickmanZ_map.tmx"
 TILE_SCALING = 1
 LAYER_FLOOR = "floor"
 LAYER_WALLS = "walls"

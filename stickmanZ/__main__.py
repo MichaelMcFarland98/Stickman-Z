@@ -2,81 +2,8 @@ import arcade
 import math
 import random
 from game.constants import *
-
-
-class Player(arcade.Sprite):
-
-    def update(self):
-        """ Move the player """
-
-        self.center_x += self.change_x
-        self.center_y += self.change_y
-
-        # Check for out-of-bounds
-        if self.left < 0:
-            self.left = 0
-        elif self.right > SCREEN_WIDTH - 1:
-            self.right = SCREEN_WIDTH - 1
-
-        if self.bottom < 0:
-            self.bottom = 0
-        elif self.top > SCREEN_HEIGHT - 1:
-            self.top = SCREEN_HEIGHT - 1
-
-
-class Zombie(arcade.Sprite):
-    """
-    This class represents the Zombies on our screen. It is a child class of
-    the arcade library's "Sprite" class.
-    """
-
-    def __init__(self, sprite, scaling):
-        self.other_zombies = arcade.SpriteList()
-        super().__init__(sprite, scaling)
-
-    def follow_sprite(self, player_sprite):
-        """
-        This function will move the current sprite towards whatever
-        other sprite is specified as a parameter.
-
-        We use the 'min' function here to get the sprite to line up with
-        the target sprite, and not jump around if the sprite is not off
-        an exact multiple of ZOMBIE_SPEED.
-        """
-
-        self.center_x += self.change_x
-        self.center_y += self.change_y
-
-        # Random 1 in 100 chance that we'll change from our old direction and
-        # then re-aim toward the player
-        if random.randrange(100) == 0:
-            start_x = self.center_x
-            start_y = self.center_y
-
-            # Get the destination location for the bullet
-            dest_x = player_sprite.center_x
-            dest_y = player_sprite.center_y
-
-            # Do math to calculate how to get the bullet to the destination.
-            # Calculation the angle in radians between the start points
-            # and end points. This is the angle the bullet will travel.
-            x_diff = dest_x - start_x
-            y_diff = dest_y - start_y
-            angle = math.atan2(y_diff, x_diff)
-
-            # Taking into account the angle, calculate our change_x
-            # and change_y. Velocity is how fast the bullet travels.
-            self.change_x = math.cos(angle) * ZOMBIE_SPEED
-            self.change_y = math.sin(angle) * ZOMBIE_SPEED
-
-    def setup_other_zombies(self, zombie, zombie_list):
-        """"""
-
-        new_zombie_list = arcade.SpriteList()
-        for x in zombie_list:
-            if x != zombie:
-                new_zombie_list.append(x)
-        self.other_zombies = new_zombie_list
+from game.player import Player
+from game.zombie import Zombie
 
 
 class MyGame(arcade.Window):
@@ -109,8 +36,8 @@ class MyGame(arcade.Window):
         self.down_pressed = False
 
         # Used in scrolling
-        self.view_bottom = 0
-        self.view_left = 0
+        self.view_left = (PLAYING_FIELD_WIDTH - SCREEN_WIDTH) / 2
+        self.view_bottom = (PLAYING_FIELD_HEIGHT - SCREEN_HEIGHT) / 2
 
     def setup(self):
         """ Set up the game and initialize the variables. """
@@ -123,23 +50,23 @@ class MyGame(arcade.Window):
         # Set up the player
         self.player_sprite = Player(
             PLAYER_SPRITE, PLAYER_SCALING)
-        self.player_sprite.center_x = SCREEN_WIDTH / 2
-        self.player_sprite.center_y = SCREEN_HEIGHT / 2
+        self.player_sprite.center_x = PLAYING_FIELD_WIDTH / 2
+        self.player_sprite.center_y = PLAYING_FIELD_HEIGHT / 2
         self.player_list.append(self.player_sprite)
 
         # Create the zombies
         for i in range(ZOMBIE_COUNT):
 
             # Create the zombies instance
-            zombie = Zombie(
+            zombie_sprite = Zombie(
                 ZOMBIE_SPRITE, ZOMBIE_SCALING)
 
             # Position the zombie
-            zombie.center_x = random.randrange(SCREEN_WIDTH)
-            zombie.center_y = random.randrange(120, SCREEN_HEIGHT)
+            zombie_sprite.center_x = random.randrange(SCREEN_WIDTH)
+            zombie_sprite.center_y = random.randrange(120, SCREEN_HEIGHT)
 
             # Add the zombie to the lists
-            self.zombie_list.append(zombie)
+            self.zombie_list.append(zombie_sprite)
 
         for zombie in self.zombie_list:
             zombie.setup_other_zombies(zombie, self.zombie_list)
@@ -221,7 +148,7 @@ class MyGame(arcade.Window):
                 self.score += 1
 
             # If the bullet flies off-screen, remove it.
-            if bullet.bottom > self.width or bullet.top < 0 or bullet.right < 0 or bullet.left > self.width:
+            if bullet.bottom > PLAYING_FIELD_HEIGHT or bullet.top < 0 or bullet.right < 0 or bullet.left > PLAYING_FIELD_WIDTH:
                 bullet.remove_from_sprite_lists()
 
         # Call update to move the sprite
@@ -240,33 +167,29 @@ class MyGame(arcade.Window):
         changed = False
 
         # Scroll left
-        left_boundary = self.view_left + VIEWPORT_MARGIN
+        left_boundary = self.view_left + VIEWPORT_MARGIN_WIDTH
         if self.player_sprite.left < left_boundary:
             self.view_left -= left_boundary - self.player_sprite.left
             changed = True
 
         # Scroll right
-        right_boundary = self.view_left + SCREEN_WIDTH - VIEWPORT_MARGIN
+        right_boundary = self.view_left + SCREEN_WIDTH - VIEWPORT_MARGIN_WIDTH
         if self.player_sprite.right > right_boundary:
             self.view_left += self.player_sprite.right - right_boundary
             changed = True
 
         # Scroll up
-        top_boundary = self.view_bottom + SCREEN_HEIGHT - VIEWPORT_MARGIN
+        top_boundary = self.view_bottom + SCREEN_HEIGHT - VIEWPORT_MARGIN_HEIGHT
         if self.player_sprite.top > top_boundary:
             self.view_bottom += self.player_sprite.top - top_boundary
             changed = True
 
         # Scroll down
-        bottom_boundary = self.view_bottom + VIEWPORT_MARGIN
+        bottom_boundary = self.view_bottom + VIEWPORT_MARGIN_HEIGHT
         if self.player_sprite.bottom < bottom_boundary:
             self.view_bottom -= bottom_boundary - self.player_sprite.bottom
             changed = True
 
-        # Make sure our boundaries are integer values. While the view port does
-        # support floating point numbers, for this application we want every pixel
-        # in the view port to map directly onto a pixel on the screen. We don't want
-        # any rounding errors.
         self.view_left = int(self.view_left)
         self.view_bottom = int(self.view_bottom)
 
@@ -276,6 +199,8 @@ class MyGame(arcade.Window):
                                 SCREEN_WIDTH + self.view_left,
                                 self.view_bottom,
                                 SCREEN_HEIGHT + self.view_bottom)
+            # self.player_sprite.center_x = self.view_left
+            # self.player_sprite.center_y = self.view_bottom
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
@@ -315,8 +240,8 @@ class MyGame(arcade.Window):
         bullet.center_y = start_y
 
         # Get from the mouse the destination location for the bullet
-        dest_x = x
-        dest_y = y
+        dest_x = x + self.view_left
+        dest_y = y + self.view_bottom
 
         # Do math to calculate how to get the bullet to the destination.
         # Calculation the angle in radians between the start points
@@ -343,8 +268,8 @@ class MyGame(arcade.Window):
         start_x = self.player_sprite.center_x
         start_y = self.player_sprite.center_y
 
-        dest_x = x
-        dest_y = y
+        dest_x = x + self.view_left
+        dest_y = y + self.view_bottom
 
         x_diff = dest_x - start_x
         y_diff = dest_y - start_y
