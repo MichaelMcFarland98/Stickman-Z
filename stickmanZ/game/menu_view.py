@@ -1,7 +1,7 @@
 import arcade
 from game import constants
 from game.game_view import GameView
-from game.level_view import LevelView
+from game.instruction_view import InstructionView
 
 class menu_view(arcade.View):
     def on_show(self):
@@ -19,5 +19,5 @@ class menu_view(arcade.View):
                          arcade.color.GRAY, font_size=20, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        level_view = LevelView()
-        self.window.show_view(level_view)
+        instruction_view = InstructionView()
+        self.window.show_view(instruction_view)

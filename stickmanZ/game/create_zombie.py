@@ -49,7 +49,6 @@ class Create_zombie(arcade.Sprite):
         """
         This function will move the current sprite towards whatever
         other sprite is specified as a parameter.
-
         We use the 'min' function here to get the sprite to line up with
         the target sprite, and not jump around if the sprite is not off
         an exact multiple of SPRITE_SPEED.

@@ -10,6 +10,7 @@ from game.input_service import Input_service
 from game.handle_collisions import HandleCollisions
 from game.set_up import Set_up
 from game.game_over_view import GameOverView
+from game.create_bullets import Create_bullet
 
 
 
@@ -22,19 +23,22 @@ class GameView(arcade.View):
         """
         initialized the Director
         """
-        #set constants
+        #import the constants
         self.SCREEN_HEIGHT = constants.SCREEN_HEIGHT
         self.SCREEN_WIDTH = constants.SCREEN_WIDTH
         self.SCREEN_TITLE = constants.SCREEN_TITLE
         self.CHARACTER_SCALING = constants.CHARACTER_SCALING
-        self.player_movement_speed = constants.PLAYER_MOVEMENT_SPEED
+        self.SPRITE_SCALING_LASER = constants.SPRITE_SCALING_LASER
+        self.BULLET_SPEED = constants.BULLET_SPEED
+        self.player_movement_speed = constants.STARTING_PLAYER_MOVEMENT_SPEED
         self.zombie_image = constants.zombie_image
 
-        #set classes
+        #imports classes
         self.output_service = Output_service()
         self.input_service = Input_service()
         self.collision = HandleCollisions()
         self.set_up = Set_up()
+        self.bullets = Create_bullet()
 
         #creats variables that will be used
         self.level = 1
@@ -58,6 +62,8 @@ class GameView(arcade.View):
         # go into a list.
         self.player_list = None
         self.zombie_list = None
+        self.bullet_list = None
+        self.weapon_list = None
         self.create_zombie = None
         self.player = None
         self.player_sprite = None
@@ -66,18 +72,20 @@ class GameView(arcade.View):
         self.all_sprites, self.zombie_base_modifiers = self.set_up.set_up_start(self.all_sprites, self.zombie_base_modifiers, self.level)
         self.player_list = self.all_sprites['player'][0]
         self.zombie_list = self.all_sprites['zombie'][0]
+        self.bullet_list = self.all_sprites['bullet'][0]
         self.wall_list = self.all_sprites['wall'][0]
         self.obstical_list = self.all_sprites['obsticals'][0]
+        self.weapon_list = self.all_sprites['weapon'][0]
         self.player = self.player_list[0]
         self.zombie_modifiers = self.zombie_base_modifiers
 
-        arcade.set_background_color(arcade.csscolor.DARK_RED)
+        arcade.set_background_color(arcade.csscolor.RED)
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
-        #determis if the room is an upgrade room or a level
+        #determis if the room is a weapon room or a level
         if self.room % 2 == 0:
-            self.all_sprites = self.set_up.upgrade_room(self.all_sprites)
+            self.all_sprites = self.set_up.weapon_room(self.all_sprites)
         else:
             self.all_sprites, self.zombie_base_modifiers = self.set_up.set_up_new(self.all_sprites, self.zombie_base_modifiers, self.level)
             self.level = self.level + 1
@@ -96,28 +104,30 @@ class GameView(arcade.View):
         """ Render the screen. """
         arcade.start_render()
         self.output_service.execute(self.all_sprites)
-       
+        #self.bullet_list.draw()
     
     def on_key_press(self, key, modifiers):
-        """When key  is pressed, this is called """
+        """Called whenever a key is pressed. """
         self.player_sprites = self.input_service.on_press(key, modifiers, self.all_sprites, self.player_movement_speed)
 
     def on_key_release(self, key, modifiers):
-        """key is released, this function is called """
+        """Called when the user releases a key. """
         self.player_sprite = self.input_service.on_release(key, modifiers, self.all_sprites)
 
 
     def on_mouse_press(self, x, y, button, modifiers):
-        """ When mouse button is pressed, this function is called """
-        pass
+        """ Called whenever the mouse button is clicked. """
+        self.bullets.start_shooting()
+        #self.all_sprites = self.input_service.on_click(x, y, button, modifiers, self.all_sprites, self.BULLET_SPEED, self.SPRITE_SCALING_LASER)
 
     def on_mouse_release(self, x, y, button, modifiers):
-        """When mouse button is released, this function is called"""
-        pass
+        """called whenever teh mouse button is realeased"""
+        self.bullets.cease_fire()
 
-    def on_mouse_motion(self, x, y, dx, dy): #If we decide to have the bullets follow mouse instead of direction of stickman
+    def on_mouse_motion(self, x, y, dx, dy):
         """updates as the mouse moves accross the screen"""
-        pass
+        self.bullets.set_x(x)
+        self.bullets.set_y(y)
 
     def on_update(self, delta_time):
         """ Movement and game logic """
@@ -130,14 +140,17 @@ class GameView(arcade.View):
         #updates the individual lists
         self.player_list.update()
         self.zombie_list.update()
+        self.bullet_list.update()
         for zombie in self.zombie_list:
             zombie.follow_player(self.all_sprites)
             zombie.zombie_animation()
 
 
-
+        #creates the bullets from the player
+        self.bullets.make_bullet(self.all_sprites)
 
         #check for collisions
+        self.zombie_modifiers, self.create_new_zombie = self.collision.bullet_zombie_collision(self.all_sprites, self.zombie_modifiers)
         self.collision.zombie_player_collision(self.all_sprites)
         
 

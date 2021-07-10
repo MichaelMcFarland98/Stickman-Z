@@ -10,21 +10,25 @@ class Output_service:
 
     def execute(self, actors):
         players = actors['player'][0]
-        zombies = actors['zombie'][0] 
+        zombies = actors['zombie'][0]
+        bullets = actors['bullet'][0]
         walls = actors['wall'][0]
         obsticals = actors['obsticals'][0]
-        
+        weapons = actors['weapon'][0]
 
-        
+        for weapon in weapons:
+            weapon.draw()
         for player in players:
             player.draw()
         for zombie in zombies:
             zombie.draw()
+        for bullet in bullets:
+            bullet.draw()
         for wall in walls:
             wall.draw() 
         for obstical in obsticals:
             obstical.draw()
-    
+        
         
         arcade.draw_text(f"Score: {player.get_score()}", 10, 630, arcade.color.WHITE, 14)
 

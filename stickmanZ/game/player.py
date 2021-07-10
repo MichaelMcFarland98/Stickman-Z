@@ -24,12 +24,17 @@ class Player(arcade.Sprite):
 
         self.score_modifier = 0
 
+        #self._sprite = sprite
+        #self.set_sprite(self._sprite)
+        #self.set_position(constants.SCREEN_WIDTH / 2, 100)
+
 
     def update(self):
-        """ Movement """
+        """ Move the player """
         self.SCREEN_HEIGHT = constants.SCREEN_HEIGHT
         self.SCREEN_WIDTH = constants.SCREEN_WIDTH
         # Move player.
+        # Remove these lines if physics engine is moving player.
         self.center_x += self.change_x
         self.center_y += self.change_y
         # Check for out-of-bounds
@@ -125,8 +130,3 @@ class Player(arcade.Sprite):
         
     def add_modifier(self, modifier):
         self.score_modifier = modifier
-        
-
-
-
-        
