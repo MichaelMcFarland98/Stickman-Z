@@ -19,7 +19,7 @@ BULLET_SPEED = 5
 ZOMBIE_SPRITE = "stickmanZ/assets/images/zombie.png"
 ZOMBIE_SCALING = 1
 ZOMBIE_SPEED = 0.5
-ZOMBIE_COUNT = 1
+ZOMBIE_COUNT = 50
 # MAP
 MAP_PATH = "stickmanZ/assets/tiled_maps/stickmanZ.tmx"
 TILE_SCALING = 1

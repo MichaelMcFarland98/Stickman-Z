@@ -62,14 +62,25 @@ class MyGame(arcade.Window):
                 ZOMBIE_SPRITE, ZOMBIE_SCALING)
 
             # Position the zombie
-            zombie_sprite.center_x = random.randrange(SCREEN_WIDTH)
-            zombie_sprite.center_y = random.randrange(120, SCREEN_HEIGHT)
+            section = random.randrange(1, 5)
+            if section == 1:
+                zombie_sprite.center_x = random.randrange(32, 160)
+                zombie_sprite.center_y = random.randrange(1440, 1568)
+            elif section == 2:
+                zombie_sprite.center_x = random.randrange(3040, 3168)
+                zombie_sprite.center_y = random.randrange(1440, 1568)
+            elif section == 3:
+                zombie_sprite.center_x = random.randrange(32, 160)
+                zombie_sprite.center_y = random.randrange(32, 160)
+            elif section == 4:
+                zombie_sprite.center_x = random.randrange(3040, 3168)
+                zombie_sprite.center_y = random.randrange(32, 160)
 
             # Add the zombie to the lists
             self.zombie_list.append(zombie_sprite)
 
-        for zombie in self.zombie_list:
-            zombie.setup_other_zombies(zombie, self.zombie_list)
+        # for zombie in self.zombie_list:
+        #     zombie.setup_other_zombies(zombie, self.zombie_list)
 
         my_map = arcade.tilemap.read_tmx(MAP_PATH)
 
@@ -89,8 +100,8 @@ class MyGame(arcade.Window):
         self.physics_engine_zombie = []
 
         for zombie in self.zombie_list:
-            self.physics_engine_zombie.append(
-                arcade.PhysicsEngineSimple(zombie, zombie.other_zombies))
+            # self.physics_engine_zombie.append(
+            #     arcade.PhysicsEngineSimple(zombie, zombie.other_zombies))
             self.physics_engine_zombie.append(
                 arcade.PhysicsEngineSimple(zombie, self.wall_list))
 
@@ -162,8 +173,6 @@ class MyGame(arcade.Window):
 
         # --- Manage Scrolling ---
 
-        # Keep track of if we changed the boundary. We don't want to call the
-        # set_viewport command if we didn't change the view port.
         changed = False
 
         # Scroll left
@@ -199,8 +208,6 @@ class MyGame(arcade.Window):
                                 SCREEN_WIDTH + self.view_left,
                                 self.view_bottom,
                                 SCREEN_HEIGHT + self.view_bottom)
-            # self.player_sprite.center_x = self.view_left
-            # self.player_sprite.center_y = self.view_bottom
 
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """
