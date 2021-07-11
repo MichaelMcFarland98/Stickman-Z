@@ -6,7 +6,7 @@ from game import constants
 class InstructionView(arcade.View):
     
     def on_show(self):
-        arcade.set_background_color(arcade.color.ORANGE_PEEL)
+        arcade.set_background_color(arcade.color.LIGHT_GRAY)
 
     def on_draw(self):
         arcade.start_render()

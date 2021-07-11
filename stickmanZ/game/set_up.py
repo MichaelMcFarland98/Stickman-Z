@@ -40,7 +40,7 @@ class Set_up:
         # Loop for each box going across
             for x in range(0, constants.SCREEN_WIDTH, constants.SPRITE_SIZE):
                 if (x != constants.SPRITE_SIZE * 4 and x != constants.SPRITE_SIZE * 5) or y == 0:
-                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+                    wall = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
                     wall.left = x
                     wall.bottom = y
                     wall_list.append(wall)
@@ -51,12 +51,12 @@ class Set_up:
                 for y in range(constants.SPRITE_SIZE, constants.SCREEN_HEIGHT - constants.SPRITE_SIZE, constants.SPRITE_SIZE):
                     # Skip making a block 4 and 5 blocks up on the right side
                     if (y != constants.SPRITE_SIZE * 4 and x != constants.SPRITE_SIZE * 5) or x == 0:
-                        wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+                        wall = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
                         wall.left = x
                         wall.bottom = y
                         wall_list.append(wall)
 
-        obstical = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+        obstical = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
         obstical.left = 7 * constants.SPRITE_SIZE
         obstical.bottom = 5 *constants.SPRITE_SIZE
         obstical_list.append(obstical)
@@ -110,7 +110,7 @@ class Set_up:
         for x in (0, constants.SCREEN_WIDTH - constants.SPRITE_SIZE):
             self.set_up_walls_x_no_hole(x)
 
-        obstical = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+        obstical = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
         obstical.left = 7 * constants.SPRITE_SIZE
         obstical.bottom = 5 *constants.SPRITE_SIZE
         obstical_list.append(obstical)
@@ -145,7 +145,7 @@ class Set_up:
         for x in (0, constants.SCREEN_WIDTH - constants.SPRITE_SIZE):
             self.set_up_walls_x_no_hole(x)
 
-        obstical = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+        obstical = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
         obstical.left = 0
         obstical.bottom = 0
         obstical_list.append(obstical)
@@ -164,14 +164,14 @@ class Set_up:
         for y in range(constants.SPRITE_SIZE, constants.SCREEN_HEIGHT - constants.SPRITE_SIZE, constants.SPRITE_SIZE):
                 # Skip making a block 4 and 5 blocks up on the right side
                     if (y != constants.SPRITE_SIZE * 4 and x != constants.SPRITE_SIZE * 5):
-                        wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+                        wall = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
                         wall.left = x
                         wall.bottom = y
                         self.wall_list.append(wall)
 
     def set_up_walls_x_no_hole(self, x):
         for y in range(constants.SPRITE_SIZE, constants.SCREEN_HEIGHT - constants.SPRITE_SIZE, constants.SPRITE_SIZE):
-                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+                    wall = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
                     wall.left = x
                     wall.bottom = y
                     self.wall_list.append(wall)
@@ -179,14 +179,14 @@ class Set_up:
     def set_up_walls_y_hole(self, y):
         for x in range(0, constants.SCREEN_WIDTH, constants.SPRITE_SIZE):
                 if (x != constants.SPRITE_SIZE * 8 and x != constants.SPRITE_SIZE * 7):
-                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+                    wall = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
                     wall.left = x
                     wall.bottom = y
                     self.wall_list.append(wall)
 
     def set_up_wall_y_no_hole(self, y):
         for x in range(0, constants.SCREEN_WIDTH, constants.SPRITE_SIZE):
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", constants.CHARACTER_SCALING)
+                wall = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
                 wall.left = x
                 wall.bottom = y
                 self.wall_list.append(wall)

@@ -79,7 +79,12 @@ class GameView(arcade.View):
         self.player = self.player_list[0]
         self.zombie_modifiers = self.zombie_base_modifiers
 
-        arcade.set_background_color(arcade.csscolor.RED)
+        self.background = None
+        arcade.set_background_color(arcade.color.AMAZON)
+        # self.background = arcade.load_texture(":resources:images/backgrounds/abstract_1.jpg")
+        # arcade.draw_lrwh_rectangle_textured(0, 0, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, self.background)
+        
+        
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
@@ -100,11 +105,14 @@ class GameView(arcade.View):
         self.zombie_modifiers = self.zombie_base_modifiers
         self.room = self.room + 1
 
+       
+
     def on_draw(self):
         """ Render the screen. """
         arcade.start_render()
         self.output_service.execute(self.all_sprites)
-        #self.bullet_list.draw()
+        
+        
     
     def on_key_press(self, key, modifiers):
         """Called whenever a key is pressed. """

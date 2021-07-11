@@ -5,7 +5,7 @@ from game.instruction_view import InstructionView
 
 class menu_view(arcade.View):
     def on_show(self):
-        arcade.set_background_color(arcade.color.PINK)
+        arcade.set_background_color(arcade.color.RED)
 
     def on_draw(self):
         WIDTH = constants.SCREEN_WIDTH

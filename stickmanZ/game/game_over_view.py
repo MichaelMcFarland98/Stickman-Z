@@ -22,6 +22,17 @@ class GameOverView(arcade.View):
        
         arcade.draw_text("You Died...", constants.SCREEN_HEIGHT / 2, constants.SCREEN_WIDTH / 2, arcade.color.WHITE, 54)
 
+        if self.score <= 500:
+            arcade.draw_text("I rather fight zombies by myself than with you...", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2-25, arcade.color.WHITE, font_size=20, anchor_x="center")
+        elif self.score <= 1000 and self.score > 500:
+            arcade.draw_text("You got an okay shot, maybe try not dying next time.", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2-25, arcade.color.WHITE, font_size=20, anchor_x="center")
+        elif self.score > 1000:
+            arcade.draw_text("Are you related to John Wick, or maybe Chuck Norris??", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2-25, arcade.color.WHITE, font_size=20, anchor_x="center")
+        else:
+            arcade.draw_text("Something isn't right...", constants.SCREEN_WIDTH/2, constants.SCREEN_HEIGHT/2-25, arcade.color.WHITE, font_size=20, anchor_x="center")
+
+
+
         time_taken_formatted = f"{round(self.score, 2)} points"
         arcade.draw_text(f"Your Score: {time_taken_formatted}",
                          WIDTH/2,
