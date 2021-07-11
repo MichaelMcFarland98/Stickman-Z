@@ -1,3 +1,4 @@
+
 from game import constants
 import arcade
 
@@ -130,3 +131,4 @@ class Player(arcade.Sprite):
         
     def add_modifier(self, modifier):
         self.score_modifier = modifier
+
