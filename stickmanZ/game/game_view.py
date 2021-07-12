@@ -89,14 +89,12 @@ class GameView(arcade.View):
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
         #determis if the room is a weapon room or a level
-        if self.room % 2 == 0:
-            self.all_sprites = self.set_up.weapon_room(self.all_sprites)
-        else:
-            self.all_sprites, self.zombie_base_modifiers = self.set_up.set_up_new(self.all_sprites, self.zombie_base_modifiers, self.level)
-            self.level = self.level + 1
-            self.new_round = True
-            self.player.end_restart()
-            self.collision.restart()
+        
+        self.all_sprites, self.zombie_base_modifiers = self.set_up.set_up_new(self.all_sprites, self.zombie_base_modifiers, self.level)
+        self.level = self.level + 1
+        self.new_round = True
+        self.player.end_restart()
+        self.collision.restart()
         # reassigns the lists and variables that change from level to lever or that are reset
         self.player_list = self.all_sprites['player'][0]
         self.zombie_list = self.all_sprites['zombie'][0]

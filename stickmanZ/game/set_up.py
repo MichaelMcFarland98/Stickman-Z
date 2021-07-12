@@ -2,7 +2,7 @@ import arcade
 from game.player import Player
 from game import constants
 import random
-from game.weapon_room import weapon_room
+
 
 class Set_up:
     def __init__(self):
@@ -124,39 +124,6 @@ class Set_up:
         player_sprites['weapon'] = [weapon_list]
         zombie_modifiers = [zombie_count, zombie_speed, zombie_health]
         return player_sprites, zombie_modifiers
-
-    def weapon_room(self, player_sprites):
-        weapon_list = arcade.SpriteList()
-        
-
-        player_sprite = player_sprites['player'][0][0]
-        player_list = arcade.SpriteList()
-        zombie_list = arcade.SpriteList()
-        self.wall_list = arcade.SpriteList()
-        obstical_list = arcade.SpriteList()
-        # player_sprite = Player(":resources:images/animated_characters/female_person/femalePerson_idle.png", constants.CHARACTER_SCALING)
-        player_sprite.center_x = constants.SCREEN_WIDTH / 2
-        player_sprite.center_y = 100
-        player_list.append(player_sprite)
-        bullet_list = arcade.SpriteList()
-
-        for y in (0, constants.SCREEN_HEIGHT - constants.SPRITE_SIZE):
-            self.set_up_walls_y_hole(y)
-        for x in (0, constants.SCREEN_WIDTH - constants.SPRITE_SIZE):
-            self.set_up_walls_x_no_hole(x)
-
-        obstical = arcade.Sprite(":resources:images/tiles/brickGrey.png", constants.CHARACTER_SCALING)
-        obstical.left = 0
-        obstical.bottom = 0
-        obstical_list.append(obstical)
-        self.wall_list.append(obstical)
-
-        player_sprites['weapon'] = [weapon_list]
-        player_sprites['wall'] = [self.wall_list]
-        player_sprites['obsticals'] = [obstical_list]
-
-        return player_sprites
-
 
 
 
