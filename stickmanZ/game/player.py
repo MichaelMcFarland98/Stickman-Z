@@ -15,7 +15,7 @@ class Player(arcade.Sprite):
         self.character_face_direction = constants.RIGHT_FACING
         self.cur_texture = 0
         self.scale = constants.CHARACTER_SCALING
-        self.main_path = ":resources:images/animated_characters/female_person/femalePerson"
+        self.main_path = ":resources:images/animated_characters/male_person/malePerson"
         self.idle_texture_pair = self.load_texture_pair(f"{self.main_path}_idle.png")
 
         self.walk_textures = []
