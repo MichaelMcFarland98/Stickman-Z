@@ -2,8 +2,9 @@
 from game import constants
 import arcade
 
+
 class Player(arcade.Sprite):
-    
+
     def __init__(self, sprite, scaling):
         super().__init__(sprite, scaling)
         self.player_health = 10
@@ -16,7 +17,8 @@ class Player(arcade.Sprite):
         self.cur_texture = 0
         self.scale = constants.CHARACTER_SCALING
         self.main_path = ":resources:images/animated_characters/male_person/malePerson"
-        self.idle_texture_pair = self.load_texture_pair(f"{self.main_path}_idle.png")
+        self.idle_texture_pair = self.load_texture_pair(
+            f"{self.main_path}_idle.png")
 
         self.walk_textures = []
         for i in range(8):
@@ -26,9 +28,8 @@ class Player(arcade.Sprite):
         self.score_modifier = 0
 
         #self._sprite = sprite
-        #self.set_sprite(self._sprite)
+        # self.set_sprite(self._sprite)
         #self.set_position(constants.SCREEN_WIDTH / 2, 100)
-
 
     def update(self):
         """ Move the player """
@@ -56,9 +57,6 @@ class Player(arcade.Sprite):
             self.end = False
             self.restart = False
 
-
-
-
     def player_damage(self, damage):
         """
         When zombie hits player, the player loses health
@@ -70,7 +68,7 @@ class Player(arcade.Sprite):
         """
         Returns how much health the player has
         """
-        
+
         return self.player_health
 
     def get_max_health(self):
@@ -84,7 +82,7 @@ class Player(arcade.Sprite):
 
     def get_score(self):
         return self.score
-      
+
     def end_point(self):
         return self.end
 
@@ -128,7 +126,6 @@ class Player(arcade.Sprite):
 
     def set_damage(self, damage):
         self.damage = damage
-        
+
     def add_modifier(self, modifier):
         self.score_modifier = modifier
-

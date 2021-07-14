@@ -1,4 +1,5 @@
-
+BACKGROUND = "stickmanZ/assets/images/background.png"
+# BACKGROUND = ":resources:images/backgrounds/abstract_1.jpg"
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
 SCREEN_TITLE = "Stickman Z"
