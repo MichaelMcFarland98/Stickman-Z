@@ -1,6 +1,3 @@
-import arcade
-import math
-import random
 
 class Input_service:
     
@@ -72,3 +69,4 @@ class Input_service:
         player_sprites['bullet'] = [bullet_list]
 
         return player_sprites
+
