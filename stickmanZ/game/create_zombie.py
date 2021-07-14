@@ -10,7 +10,7 @@ class Create_zombie(arcade.Sprite):
         self.hit = False
         self.count = 0
         self.health = 100 * zombie_modifier[2]
-        self.move_speed = zombie_modifier[1] * 2
+        self.move_speed = zombie_modifier[1] * 8
         self.hit_player = False
         self.hit_count = 0
         self.power = 1

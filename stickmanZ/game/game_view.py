@@ -11,6 +11,7 @@ from game.handle_collisions import HandleCollisions
 from game.set_up import Set_up
 from game.game_over_view import GameOverView
 from game.create_bullets import Create_bullet
+MUSIC_VOLUME = 0.5
 
 
 class GameView(arcade.View):
@@ -79,9 +80,12 @@ class GameView(arcade.View):
         self.zombie_modifiers = self.zombie_base_modifiers
 
         self.background = None
-        # arcade.set_background_color(arcade.color.AMAZON)
-        # self.background = arcade.load_texture(":resources:images/backgrounds/abstract_1.jpg")
-        # arcade.draw_lrwh_rectangle_textured(0, 0, constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, self.background)
+
+        self.game_over_sound = arcade.sound.load_sound(":resources:sounds/gameover3.wav")
+
+        
+        
+
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game. """
@@ -100,6 +104,9 @@ class GameView(arcade.View):
         self.player = self.player_list[0]
         self.zombie_modifiers = self.zombie_base_modifiers
         self.room = self.room + 1
+        
+
+        
 
     def on_draw(self):
         """ Render the screen. """
@@ -179,6 +186,7 @@ class GameView(arcade.View):
                     self.setup()
         self.create_zombies()
         if self.player_list[0].get_health() <= 0:
+            arcade.sound.play_sound(self.game_over_sound)
             game_over = GameOverView(self.player.get_score())
             self.window.show_view(game_over)
         self.total_time = self.total_time - 1
@@ -224,3 +232,4 @@ class GameView(arcade.View):
         self.setup()
         self.create_zombies()
         arcade.run()
+        

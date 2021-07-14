@@ -9,6 +9,8 @@ class HandleCollisions:
         self.center_x = None
         self.center_y = None
         self.did_hit = False
+        self.hit_sound = arcade.sound.load_sound(":resources:sounds/hit3.wav")
+        self.hit_sound_wall = arcade.sound.load_sound(":resources:sounds/hurt2.wav")
 
 
     def bullet_zombie_collision(self, player_sprites, zombie_modifier):
@@ -34,9 +36,13 @@ class HandleCollisions:
             # If it did, get rid of the bullet
             if len(hit_list) > 0:
                 bullet.remove_from_sprite_lists()
+                # Hit Sound for zombie
+                arcade.sound.play_sound(self.hit_sound)
             
             if len(wall_hit_list) > 0:
                 bullet.remove_from_sprite_lists()
+                # Hit Sound for wall
+                arcade.sound.play_sound(self.hit_sound_wall)
 
             # For every zombie that is hit, reduce health of zombie
             for zombie in hit_list:
