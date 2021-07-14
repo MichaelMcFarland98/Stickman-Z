@@ -1,10 +1,12 @@
 import arcade
 from game import constants
+# from game.menu_view import menu_view
 
 class GameOverView(arcade.View):
     def __init__(self, score):
         super().__init__()
         self.score = score
+        
 
     def on_show(self):
         arcade.set_background_color(arcade.color.BLACK)
@@ -19,7 +21,7 @@ class GameOverView(arcade.View):
         WIDTH = constants.SCREEN_WIDTH
         TITLE = constants.SCREEN_TITLE
         arcade.start_render()
-       
+        
         arcade.draw_text("You Died...", constants.SCREEN_HEIGHT / 2, constants.SCREEN_WIDTH / 2, arcade.color.WHITE, 54)
 
         if self.score <= 500:
@@ -43,6 +45,7 @@ class GameOverView(arcade.View):
 
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
+        # start_view = menu_view()
+        # self.window.show_view(start_view)
         pass
-    #Add Play again on wish list  
 

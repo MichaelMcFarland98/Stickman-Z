@@ -8,8 +8,10 @@ class Create_bullet:
         self.fire = False
         self.x = 0
         self.y = 0
-        self.fire_rate = 10
+        self.fire_rate = 15
         self.cooldown = self.fire_rate
+        self.gun_sound = arcade.sound.load_sound(":resources:sounds/laser2.wav")
+        
 
     def make_bullet(self, player_sprites):
         """makes the bullets at a given speed"""
@@ -56,6 +58,9 @@ class Create_bullet:
                 bullet_list.append(bullet)
                 player_sprites['bullet'] = [bullet_list]
                 self.cooldown = self.fire_rate
+
+                #bullet sound
+                arcade.sound.play_sound(self.gun_sound)
             else:
                 self.cooldown -= 1
 
@@ -63,6 +68,7 @@ class Create_bullet:
 
     def start_shooting(self):
         self.fire = True
+        
 
     def cease_fire(self):
         self.fire = False
