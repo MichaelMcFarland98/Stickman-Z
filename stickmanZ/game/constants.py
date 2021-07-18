@@ -1,4 +1,8 @@
-BACKGROUND = "stickmanZ/assets/images/background.png"
+import os
+
+PATH = os.path.dirname(os.path.abspath(__file__))
+HEAD, TAIL = os.path.split(PATH)
+BACKGROUND = os.path.join(HEAD, 'assets', 'images', 'background.png')
 # BACKGROUND = ":resources:images/backgrounds/abstract_1.jpg"
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
